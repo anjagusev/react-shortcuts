@@ -20,7 +20,6 @@ function Shortcuts() {
     );
   };
   const renderTable = (shortcut, i) => {
-    // console.log(`${shortcut.title} : ${shortcut.commands.length}`);
     //determines which css grid class to give the shortcut based on number of shortcuts, plus header and title.
     const classNumber = shortcut.commands.length + 2;
     const classTitle = shortcut.title.replace(/\s+/g, "").toLowerCase();
@@ -51,9 +50,29 @@ function Shortcuts() {
     );
   };
 
+  const renderLinks = shortcuts => {
+    console.log(shortcuts);
+    return shortcuts.map((shortcut, i) => {
+      const urlLink = shortcut.title.replace(/\s+/g, "").toLowerCase();
+      return (
+        <li>
+          {shortcut.title} - {urlLink}
+        </li>
+      );
+    });
+  };
+
   return (
-    <div className="wrap">
-      {shortcuts.map((shortcut, i) => renderTable(shortcut, i))}
+    <div id="wrapper">
+      <header>
+        <h1>Shortcuts</h1>
+      </header>
+      <ul className="links">{renderLinks(shortcuts)}</ul>
+      <div id="wrap">
+        <div className="wrap">
+          {shortcuts.map((shortcut, i) => renderTable(shortcut, i))}
+        </div>
+      </div>
     </div>
   );
 }

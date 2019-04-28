@@ -164,6 +164,10 @@
         "keys": ["⌘", "K", "⌘", "O"]
       },
       {
+        "action": "Unfold All",
+        "keys": ["⌘", "K", "⌘", "J"]
+      },
+      {
         "action": "Comment Out",
         "keys": ["⌘", "/"]
       },

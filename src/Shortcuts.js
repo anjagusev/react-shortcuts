@@ -3,23 +3,70 @@ import logo from "./logo.svg";
 import "./main.scss";
 import shortcuts from "./shortcuts.json";
 
-function Shortcuts() {
-  const renderKeys = (key, i) => {
+class Shortcuts extends React.Component {
+  state = {
+    shortcuts: shortcuts,
+    selectedShortcut: []
+  };
+
+  componentWillMount() {
+    //add a slug to every shortcut for url
+    let updatedShortcuts = [...this.state.shortcuts];
+    updatedShortcuts = updatedShortcuts.map(shortcut => {
+      shortcut.slug = shortcut.title.replace(/\s+/g, "").toLowerCase();
+      return shortcut;
+    });
+
+    const { params } = this.props.match;
+    if (params.Id != null) {
+      console.log("updating?");
+      const selectedShortcut = updatedShortcuts.filter(
+        shortcut => shortcut.slug == params.Id
+      );
+      this.setState({
+        shortcuts: updatedShortcuts,
+        selectedShortcut: selectedShortcut
+      });
+    } else {
+      this.setState({
+        shortcuts: updatedShortcuts,
+        selectedShortcut: updatedShortcuts
+      });
+    }
+  }
+
+  goToShortcut(slug) {
+    if (slug == "all") {
+      let selectedShortcut = [...this.state.shortcuts];
+      this.setState({ selectedShortcut });
+      console.log("all");
+      this.props.history.push(`/`);
+    } else {
+      this.props.history.push(`/${slug}`);
+      let selectedShortcut = [...this.state.shortcuts];
+      selectedShortcut = selectedShortcut.filter(
+        shortcut => shortcut.slug == slug
+      );
+      this.setState({ selectedShortcut });
+    }
+  }
+
+  renderKeys = (key, i) => {
     return <kbd key={i}>{key}</kbd>;
   };
-  const renderTableRow = (command, i) => {
+  renderTableRow = (command, i) => {
     return (
       <tr key={i}>
         <td>
           <p>{command.action}</p>
         </td>
         <td>
-          <p>{command.keys.map((key, i) => renderKeys(key, i))}</p>
+          <p>{command.keys.map((key, i) => this.renderKeys(key, i))}</p>
         </td>
       </tr>
     );
   };
-  const renderTable = (shortcut, i) => {
+  renderTable = (shortcut, i) => {
     //determines which css grid class to give the shortcut based on number of shortcuts, plus header and title.
     const classNumber = shortcut.commands.length + 2;
     const classTitle = shortcut.title.replace(/\s+/g, "").toLowerCase();
@@ -41,7 +88,7 @@ function Shortcuts() {
                 </td>
               </tr>
               {shortcut.commands.map((command, i) =>
-                renderTableRow(command, i)
+                this.renderTableRow(command, i)
               )}
             </tbody>
           </table>
@@ -50,31 +97,34 @@ function Shortcuts() {
     );
   };
 
-  const renderLinks = shortcuts => {
+  renderLinks = shortcuts => {
     console.log(shortcuts);
     return shortcuts.map((shortcut, i) => {
-      const urlLink = shortcut.title.replace(/\s+/g, "").toLowerCase();
       return (
-        <li>
-          {shortcut.title} - {urlLink}
+        <li key={i} onClick={() => this.goToShortcut(shortcut.slug)}>
+          {shortcut.title} - {shortcut.slug}
         </li>
       );
     });
   };
 
-  return (
-    <div id="wrapper">
-      <header>
-        <h1>Shortcuts</h1>
-      </header>
-      <ul className="links">{renderLinks(shortcuts)}</ul>
-      <div id="wrap">
-        <div className="wrap">
-          {shortcuts.map((shortcut, i) => renderTable(shortcut, i))}
+  render() {
+    return (
+      <div id="wrapper">
+        <header onClick={() => this.goToShortcut("all")}>
+          <h1>Shortcuts</h1>
+        </header>
+        <ul className="links">{this.renderLinks(this.state.shortcuts)}</ul>
+        <div id="wrap">
+          <div className="wrap">
+            {this.state.selectedShortcut.map((shortcut, i) =>
+              this.renderTable(shortcut, i)
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Shortcuts;

@@ -1,0 +1,200 @@
+[
+  {
+    "title": "Apple",
+    "commands": [
+      { "action": "Switch Windows", "keys": ["⌘", "Tab"] },
+      { "action": "Maximize Window", "keys": ["⌘", "Option", "="] },
+      { "action": "Unminimize Window", "keys": ["⌘", "Tab", "Option"] },
+      { "action": "Switch App Window", "keys": ["⌘", "`"] }
+    ]
+  },
+  {
+    "title": "Finder",
+    "commands": [
+      {
+        "action": "Rename",
+        "keys": ["⏎"]
+      }
+    ]
+  },
+
+  {
+    "title": "Bear",
+    "commands": [
+      {
+        "action": "Show Notes",
+        "keys": ["Ctrl", "1"]
+      },
+      {
+        "action": "Hide Sidebar",
+        "keys": ["Ctrl", "2"]
+      },
+      {
+        "action": "H1 Style",
+        "keys": ["⌘", "Option", "1"]
+      },
+      {
+        "action": "Inline Code Block",
+        "keys": ["⌘", "Option", "C"]
+      },
+      {
+        "action": "Code Block",
+        "keys": ["Ctrl", "⌘", "C"]
+      }
+    ]
+  },
+  {
+    "title": "Spectacle",
+    "commands": [
+      {
+        "action": "Move Window L/R",
+        "keys": ["⌘", "Option", "←", "→"]
+      },
+      {
+        "action": "Switch Displays",
+        "keys": ["⏎", "Ctrl", "Option", "←"]
+      }
+    ]
+  },
+  {
+    "title": "Chrome",
+    "commands": [
+      {
+        "action": "Switch Tabs",
+        "keys": ["Tab", "Option"]
+      },
+      {
+        "action": "Open Dev Tools",
+        "keys": ["⌘", "Option", "i"]
+      },
+      {
+        "action": "Close Tab",
+        "keys": ["⌘", "W"]
+      },
+      {
+        "action": "Back/Forward History",
+        "keys": ["⌘", "[", "]"]
+      },
+      {
+        "action": "Open First Tab",
+        "keys": ["⌘", "1"]
+      }
+    ]
+  },
+  {
+    "title": "Cloud App",
+    "commands": [
+      {
+        "action": "Record GIF",
+        "keys": ["⌘", "Shift", "6"]
+      }
+    ]
+  },
+  {
+    "title": "Clippy",
+    "commands": [
+      {
+        "action": "View Clipboard",
+        "keys": ["⌘", "Shift", "V"]
+      }
+    ]
+  },
+  {
+    "title": "VS Code",
+    "commands": [
+      {
+        "action": "Cycle Through Tabs",
+        "keys": ["⌘", "Shift", "[", "]"]
+      },
+      {
+        "action": "Toggle Sidebar",
+        "keys": ["⌘", "B"]
+      },
+      {
+        "action": "Copy Line Up",
+        "keys": ["Option", "Shift", "↑"]
+      },
+      {
+        "action": "Move Line Up",
+        "keys": ["Option", "↑"]
+      },
+      {
+        "action": "Select Next Occurrence",
+        "keys": ["⌘", "D"]
+      },
+      {
+        "action": "Expand or Shrink Selection",
+        "keys": ["⌘", "Ctrl", "Shift", "←", "→"]
+      },
+      {
+        "action": "Cycle Tabs",
+        "keys": ["Ctrl", "Tab"]
+      },
+      {
+        "action": "Open File",
+        "keys": ["⌘", "P"]
+      },
+      {
+        "action": "Cursor End of Line",
+        "keys": ["Shift", "Option", "/"]
+      },
+      {
+        "action": "Cursor Word Start Left",
+        "keys": ["Option", "→"]
+      },
+      {
+        "action": "Open Command P",
+        "keys": ["⌘", "Shift", "P"]
+      },
+
+      {
+        "action": "Select Text Between \"\"",
+        "keys": ["⌘", ";"]
+      },
+      {
+        "action": "Cursor Word L or R",
+        "keys": ["Option", "←", "→"]
+      },
+      {
+        "action": "Cursor Part L or R",
+        "keys": ["Ctrl", "Option", "←", "→"]
+      },
+      {
+        "action": "Fold All",
+        "keys": ["⌘", "K", "⌘", "O"]
+      },
+      {
+        "action": "Comment Out",
+        "keys": ["⌘", "/"]
+      },
+      {
+        "action": "Select All Occurrences",
+        "keys": ["⌘", "Option", "D"]
+      },
+      {
+        "action": "Open Terminal",
+        "keys": ["Ctrl", "~"]
+      },
+      {
+        "action": "Switch Quote Type",
+        "keys": ["⌘", "\""]
+      },
+      {
+        "action": "New File",
+        "keys": ["Ctrl", "Option", "N"]
+      },
+      {
+        "action": "Delete Line",
+        "keys": ["⌘", "Shift", "K"]
+      },
+      {
+        "action": "Open in Browser",
+        "keys": ["Option", "B"]
+      },
+      {
+        "action": "Open Alt Browser",
+        "keys": ["Option", "Shift", "B"]
+      }
+    ]
+  }
+]

@@ -1,7 +1,6 @@
-// body {
-//   background: black;
-// }
 @import "reset.scss";
+
+/* Fonts */
 @import url("https://fonts.googleapis.com/css?family=Poppins:600,700|Rubik:400,500");
 
 $font-stack-rubik: "Rubik", sans-serif;
@@ -19,6 +18,7 @@ body {
   color: $body-grey;
   font-size: 16px;
   margin-top: 3rem;
+  font-family: $font-stack-rubik;
 }
 
 h1 {
@@ -54,6 +54,17 @@ p {
   line-height: 1.625rem;
   margin-top: 0rem;
   margin-bottom: 0rem;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+li {
+  padding: 1rem 0.3rem 0.3rem 0.3rem;
+  margin-left: 10px;
+  border-bottom: 1px solid $box-border;
 }
 
 table {
@@ -131,7 +142,7 @@ kbd {
   display: grid;
   grid-gap: 1.25rem;
   grid-template-columns: repeat(auto-fill, minmax(21.875rem, 1fr));
-  grid-template-rows: repeat(25, 4.0625rem);
+  grid-template-rows: repeat(20, 4.0625rem);
   // grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
   grid-auto-flow: dense;
   // margin: 0 auto;
@@ -146,6 +157,7 @@ kbd {
   padding: 0.9375rem;
 }
 
+/* grid specific styling*/
 .box {
   order: 1;
   // border: 3px solid red;
@@ -178,30 +190,6 @@ kbd {
   grid-row: span 22;
 }
 
-// .bear {
-//   grid-row: span 6;
-// }
-// .cloudapp {
-//   grid-row: span 3;
-// }
-// .finder {
-//   grid-row: span 3;
-// }
-// .apple {
-//   grid-row: span 6;
-// }
-// .clippy {
-//   grid-row: span 3;
-// }
-// .spectacle {
-//   grid-row: span 4;
-// }
-// .chrome {
-//   grid-row: span 6;
-// }
-
 .vscode {
   order: 0;
-  // grid-row: span 22;
-  // grid-row: 1 / -1;
 }

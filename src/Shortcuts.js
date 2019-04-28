@@ -18,8 +18,8 @@ class Shortcuts extends React.Component {
     });
 
     const { params } = this.props.match;
+    //is url path contains a shortcut slug such as /vscode
     if (params.Id != null) {
-      console.log("updating?");
       const selectedShortcut = updatedShortcuts.filter(
         shortcut => shortcut.slug == params.Id
       );
@@ -28,6 +28,7 @@ class Shortcuts extends React.Component {
         selectedShortcut: selectedShortcut
       });
     } else {
+      //otherwise all shortcuts are selected
       this.setState({
         shortcuts: updatedShortcuts,
         selectedShortcut: updatedShortcuts
@@ -98,11 +99,10 @@ class Shortcuts extends React.Component {
   };
 
   renderLinks = shortcuts => {
-    console.log(shortcuts);
     return shortcuts.map((shortcut, i) => {
       return (
         <li key={i} onClick={() => this.goToShortcut(shortcut.slug)}>
-          {shortcut.title} - {shortcut.slug}
+          {shortcut.title}
         </li>
       );
     });

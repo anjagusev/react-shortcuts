@@ -36,7 +36,7 @@ Preview:
 
 Each table’s size depends on the number of shortcuts associated with each application.
 
-To handle this, I programmatically added CSS classes which specify how many rows each table should span, based on the number of shortcuts they contain. The class naming convention is `.v3`. V for vertical and 3 for the number of items to span.
+To handle this, I programmatically added CSS classes which specify how many rows each table should span, based on the number of shortcuts they contain. The class naming convention is `.v3`. V for vertical and 3 for the number of rows to span.
 
 For example, the Finder table in the above screenshot has a CSS class of `.v3` because it only contains 1 keyboard shortcut. This means that the table needs to span at least 3 grid items, so there is enough room for the application title, the table headers and the shortcut itself.
 

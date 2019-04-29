@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Shortcuts from "./Shortcuts";
-import App from "./App";
 import NotFound from "./NotFound";
 import Analytics from "react-router-ga";
 

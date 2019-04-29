@@ -71,7 +71,7 @@ class Shortcuts extends React.Component {
     //determines which css grid class to give the shortcut based on number of shortcuts, plus header and title.
     const classNumber = shortcut.commands.length + 2;
     const classTitle = shortcut.title.replace(/\s+/g, "").toLowerCase();
-    const generatedClassName = `box ${classTitle} h${classNumber}`;
+    const generatedClassName = `box ${classTitle} v${classNumber}`;
     return (
       <div key={i} className={generatedClassName}>
         <h2>{shortcut.title}</h2>

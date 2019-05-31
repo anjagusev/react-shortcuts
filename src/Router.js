@@ -9,9 +9,8 @@ const Router = () => (
   <BrowserRouter>
     <Analytics id="UA-41136002-4" debug>
       <Switch>
-        <Route exact path="/" component={Shortcuts} />
-        <Route exact path="/tabs" component={Tabs} />
-        <Route path="/:os/:Id" component={Shortcuts} />
+        <Route exact path="/" component={Tabs} />
+        <Route path="/:os?/:Id?" component={Tabs} />
         <Route component={NotFound} />
       </Switch>
     </Analytics>

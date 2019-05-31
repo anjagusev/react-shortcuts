@@ -1,66 +1,53 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import logo from "./logo.svg";
 import "./main.scss";
 import shortcuts from "./shortcuts.json";
 
 class Shortcuts extends React.Component {
   state = {
-    shortcuts: shortcuts,
-    environments: [],
+    shortcuts: [],
+
     selectedShortcut: []
   };
 
-  generateSlugs(shortcut) {
-    shortcut.slug =
-      shortcut.os.toLowerCase() +
-      "-" +
-      shortcut.title.replace(/\s+/g, "").toLowerCase();
-    return shortcut;
+  isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
   }
 
   componentWillMount() {
+    console.log(this.props.shortcuts);
+
     //add a slug to every shortcut for url
-    let updatedShortcuts = [...this.state.shortcuts];
-    const distinctEnvironments = [
-      ...new Set(updatedShortcuts.map(x => x.os.toLowerCase()))
-    ];
-    updatedShortcuts = updatedShortcuts.map(this.generateSlugs);
+    let updatedShortcuts = [...this.props.shortcuts.shortcuts];
+    // const distinctEnvironments = [
+    //   ...new Set(updatedShortcuts.map(x => x.os.toLowerCase()))
+    // ];
+    //updatedShortcuts = updatedShortcuts.map(this.generateSlugs);
 
     const { params } = this.props.match;
-    //is url path contains a shortcut slug such as /vscode
-    if (params.Id != null) {
-      const selectedShortcut = updatedShortcuts.filter(
-        shortcut => shortcut.slug == params.Id
-      );
+    console.log(params);
+    console.log("is params empty?");
+    if (params === "") {
+      console.log("params is empty ");
+    }
+    if (this.isEmpty(params)) {
+      console.log("empty");
+      const selectedShortcut = updatedShortcuts;
       this.setState({
         shortcuts: updatedShortcuts,
         selectedShortcut: selectedShortcut
       });
-    } else {
-      //otherwise all shortcuts are selected
-      this.setState({
-        shortcuts: updatedShortcuts,
-        selectedShortcut: updatedShortcuts,
-        environments: distinctEnvironments
-      });
     }
-  }
-
-  goToShortcut(slug) {
-    if (slug == "all") {
-      let selectedShortcut = [...this.state.shortcuts];
-      console.log(selectedShortcut);
-      this.setState({ selectedShortcut });
-      console.log("all");
-      this.props.history.push(`/`);
-    } else {
-      let selectedShortcut = [...this.state.shortcuts];
-      selectedShortcut = selectedShortcut.filter(
-        shortcut => shortcut.slug == slug
-      );
-      this.props.history.push(`/${selectedShortcut[0].os}/${slug}`);
-      this.setState({ selectedShortcut });
-    }
+    // else {
+    //otherwise all shortcuts are selected
+    this.setState({
+      shortcuts: updatedShortcuts,
+      selectedShortcut: updatedShortcuts
+    });
   }
 
   renderKeys = (key, i) => {
@@ -108,11 +95,30 @@ class Shortcuts extends React.Component {
       </div>
     );
   };
+  goToShortcut(shortcut) {
+    console.log(this.state);
+    if (shortcut.slug == "all") {
+      let selectedShortcut = [...this.state.shortcuts];
+      console.log(selectedShortcut);
+      this.setState({ selectedShortcut });
+      console.log("all");
+      this.props.history.push(`/`);
+    } else {
+      console.log(this.state);
+      console.log(shortcuts);
+      let selectedShortcut = [...this.state.shortcuts];
+      selectedShortcut = selectedShortcut.filter(
+        sc => sc.slug == shortcut.slug
+      );
+      this.props.history.push(`/${shortcut.os}/${shortcut.slug}`);
+      this.setState({ selectedShortcut });
+    }
+  }
 
   renderLinks = shortcuts => {
     return shortcuts.map((shortcut, i) => {
       return (
-        <li key={i} onClick={() => this.goToShortcut(shortcut.slug)}>
+        <li key={i} onClick={() => this.goToShortcut(shortcut)}>
           {shortcut.title}
         </li>
       );
@@ -121,10 +127,7 @@ class Shortcuts extends React.Component {
 
   render() {
     return (
-      <div id="wrapper">
-        <header onClick={() => this.goToShortcut("all")}>
-          <h1>Shortcuts</h1>
-        </header>
+      <div className="wrapper">
         <ul className="links">{this.renderLinks(this.state.shortcuts)}</ul>
         <div id="wrap">
           <div className="wrap">
@@ -138,4 +141,4 @@ class Shortcuts extends React.Component {
   }
 }
 
-export default Shortcuts;
+export default withRouter(Shortcuts);

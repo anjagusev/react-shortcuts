@@ -1,5 +1,6 @@
 [
   {
+    "os": "MacOS",
     "title": "Apple",
     "commands": [
       { "action": "Switch Windows", "keys": ["⌘", "Tab"] },
@@ -9,6 +10,7 @@
     ]
   },
   {
+    "os": "MacOS",
     "title": "Finder",
     "commands": [
       {
@@ -19,6 +21,7 @@
   },
 
   {
+    "os": "MacOS",
     "title": "Bear",
     "commands": [
       {
@@ -44,6 +47,7 @@
     ]
   },
   {
+    "os": "MacOS",
     "title": "Spectacle",
     "commands": [
       {
@@ -57,6 +61,7 @@
     ]
   },
   {
+    "os": "MacOS",
     "title": "Chrome",
     "commands": [
       {
@@ -82,6 +87,7 @@
     ]
   },
   {
+    "os": "MacOS",
     "title": "Cloud App",
     "commands": [
       {
@@ -91,6 +97,7 @@
     ]
   },
   {
+    "os": "MacOS",
     "title": "Clippy",
     "commands": [
       {
@@ -100,6 +107,7 @@
     ]
   },
   {
+    "os": "MacOS",
     "title": "VS Code",
     "commands": [
       {
@@ -198,6 +206,16 @@
       {
         "action": "Open Alt Browser",
         "keys": ["Option", "Shift", "B"]
+      }
+    ]
+  },
+  {
+    "os": "Windows",
+    "title": "Cloud App",
+    "commands": [
+      {
+        "action": "Record GIF",
+        "keys": ["⌘", "Shift", "6"]
       }
     ]
   }

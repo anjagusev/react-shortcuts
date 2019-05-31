@@ -6,16 +6,25 @@ import shortcuts from "./shortcuts.json";
 class Shortcuts extends React.Component {
   state = {
     shortcuts: shortcuts,
+    environments: [],
     selectedShortcut: []
   };
+
+  generateSlugs(shortcut) {
+    shortcut.slug =
+      shortcut.os.toLowerCase() +
+      "-" +
+      shortcut.title.replace(/\s+/g, "").toLowerCase();
+    return shortcut;
+  }
 
   componentWillMount() {
     //add a slug to every shortcut for url
     let updatedShortcuts = [...this.state.shortcuts];
-    updatedShortcuts = updatedShortcuts.map(shortcut => {
-      shortcut.slug = shortcut.title.replace(/\s+/g, "").toLowerCase();
-      return shortcut;
-    });
+    const distinctEnvironments = [
+      ...new Set(updatedShortcuts.map(x => x.os.toLowerCase()))
+    ];
+    updatedShortcuts = updatedShortcuts.map(this.generateSlugs);
 
     const { params } = this.props.match;
     //is url path contains a shortcut slug such as /vscode
@@ -31,7 +40,8 @@ class Shortcuts extends React.Component {
       //otherwise all shortcuts are selected
       this.setState({
         shortcuts: updatedShortcuts,
-        selectedShortcut: updatedShortcuts
+        selectedShortcut: updatedShortcuts,
+        environments: distinctEnvironments
       });
     }
   }
@@ -39,15 +49,16 @@ class Shortcuts extends React.Component {
   goToShortcut(slug) {
     if (slug == "all") {
       let selectedShortcut = [...this.state.shortcuts];
+      console.log(selectedShortcut);
       this.setState({ selectedShortcut });
       console.log("all");
       this.props.history.push(`/`);
     } else {
-      this.props.history.push(`/${slug}`);
       let selectedShortcut = [...this.state.shortcuts];
       selectedShortcut = selectedShortcut.filter(
         shortcut => shortcut.slug == slug
       );
+      this.props.history.push(`/${selectedShortcut[0].os}/${slug}`);
       this.setState({ selectedShortcut });
     }
   }

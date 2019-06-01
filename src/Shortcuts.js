@@ -5,51 +5,6 @@ import "./main.scss";
 import shortcuts from "./shortcuts.json";
 
 class Shortcuts extends React.Component {
-  state = {
-    shortcuts: [],
-
-    selectedShortcut: []
-  };
-
-  isEmpty(obj) {
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) return false;
-    }
-    return true;
-  }
-
-  componentWillMount() {
-    console.log(this.props.shortcuts);
-
-    //add a slug to every shortcut for url
-    let updatedShortcuts = [...this.props.shortcuts.shortcuts];
-    // const distinctEnvironments = [
-    //   ...new Set(updatedShortcuts.map(x => x.os.toLowerCase()))
-    // ];
-    //updatedShortcuts = updatedShortcuts.map(this.generateSlugs);
-
-    const { params } = this.props.match;
-    console.log(params);
-    console.log("is params empty?");
-    if (params === "") {
-      console.log("params is empty ");
-    }
-    if (this.isEmpty(params)) {
-      console.log("empty");
-      const selectedShortcut = updatedShortcuts;
-      this.setState({
-        shortcuts: updatedShortcuts,
-        selectedShortcut: selectedShortcut
-      });
-    }
-    // else {
-    //otherwise all shortcuts are selected
-    this.setState({
-      shortcuts: updatedShortcuts,
-      selectedShortcut: updatedShortcuts
-    });
-  }
-
   renderKeys = (key, i) => {
     return <kbd key={i}>{key}</kbd>;
   };
@@ -95,30 +50,11 @@ class Shortcuts extends React.Component {
       </div>
     );
   };
-  goToShortcut(shortcut) {
-    console.log(this.state);
-    if (shortcut.slug == "all") {
-      let selectedShortcut = [...this.state.shortcuts];
-      console.log(selectedShortcut);
-      this.setState({ selectedShortcut });
-      console.log("all");
-      this.props.history.push(`/`);
-    } else {
-      console.log(this.state);
-      console.log(shortcuts);
-      let selectedShortcut = [...this.state.shortcuts];
-      selectedShortcut = selectedShortcut.filter(
-        sc => sc.slug == shortcut.slug
-      );
-      this.props.history.push(`/${shortcut.os}/${shortcut.slug}`);
-      this.setState({ selectedShortcut });
-    }
-  }
 
   renderLinks = shortcuts => {
     return shortcuts.map((shortcut, i) => {
       return (
-        <li key={i} onClick={() => this.goToShortcut(shortcut)}>
+        <li key={i} onClick={() => this.props.goToShortcut(shortcut)}>
           {shortcut.title}
         </li>
       );
@@ -128,10 +64,12 @@ class Shortcuts extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <ul className="links">{this.renderLinks(this.state.shortcuts)}</ul>
+        <ul className="links">
+          {this.renderLinks(this.props.shortcuts.shortcuts)}
+        </ul>
         <div id="wrap">
           <div className="wrap">
-            {this.state.selectedShortcut.map((shortcut, i) =>
+            {this.props.selectedShortcut.map((shortcut, i) =>
               this.renderTable(shortcut, i)
             )}
           </div>

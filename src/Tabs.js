@@ -17,7 +17,8 @@ class TabSection extends React.Component {
     shortcuts: shortcuts,
     environments: [],
     shortcutsPerEnvironments: [],
-    tabIndex: 0
+    tabIndex: 0,
+    selectedShortcut: []
   };
 
   componentWillMount() {
@@ -32,30 +33,27 @@ class TabSection extends React.Component {
         this.filterByEnvironment(environment, shortcuts)
       );
     });
-
-    console.log(environmentArrays);
-    console.log(environmentArrays.length);
-    console.table(environmentArrays[0]);
-    console.log(environmentArrays[0].os);
-
+    let selectedShortcut = updatedShortcuts;
+    let tabIndex = 0;
     const { params } = this.props.match;
-    // console.log("params: ");
-    // console.log(params);
     let index = 0;
-    if (params.os != null) {
-      index = distinctEnvironments.findIndex(env => env === params.os);
-      console.log("found index! " + index);
+    if (params.os != null && params.Id == null) {
+      tabIndex = distinctEnvironments.findIndex(env => env === params.os);
+      selectedShortcut = this.filterByEnvironment(
+        params.os,
+        this.state.shortcuts
+      );
+    } else if (params.Id != null) {
+      selectedShortcut = updatedShortcuts.filter(sc => sc.slug == params.Id);
     }
-
     //otherwise all shortcuts are selected
     this.setState({
       shortcuts: updatedShortcuts,
       environments: distinctEnvironments,
       shortcutsPerEnvironments: environmentArrays,
-      tabIndex: index
+      tabIndex,
+      selectedShortcut
     });
-    console.log("state shortcuts");
-    console.log(this.state.shortcuts);
   }
   getOSByIndex = index => {
     return this.state.environments[index];
@@ -75,46 +73,53 @@ class TabSection extends React.Component {
     return <Tab key={environment}>{environment}</Tab>;
   };
 
+  goToShortcut = shortcut => {
+    if (shortcut.slug == "all") {
+      let selectedShortcut = [...this.state.shortcuts];
+      this.props.history.push(`/`);
+      this.setState({ selectedShortcut, tabIndex: 0 });
+    } else {
+      let selectedShortcut = [...this.state.shortcuts];
+      selectedShortcut = selectedShortcut.filter(
+        sc => sc.slug == shortcut.slug
+      );
+
+      this.setState({ selectedShortcut });
+      this.props.history.push(`/${shortcut.os}/${shortcut.slug}`);
+    }
+  };
+
   renderShortcuts = shortcutsPerEnvironment => {
-    console.log(shortcutsPerEnvironment);
     return (
       <TabPanel key={shortcutsPerEnvironment.os}>
         <Shortcuts
           shortcuts={shortcutsPerEnvironment}
           goToShortcut={this.goToShortcut}
+          selectedShortcut={this.state.selectedShortcut}
+          environments={this.state.environments}
         />
       </TabPanel>
     );
   };
 
-  showMain = () => {
-    this.props.history.push("/");
-    var refreshedShortcuts = [...this.state.shortcutsPerEnvironments];
-    this.setState({ shortcutsPerEnvironments: refreshedShortcuts });
-  };
-
   onSelect = tabIndex => {
     let os = this.getOSByIndex(tabIndex);
     this.props.history.push(`/${os}`);
-    this.setState({ tabIndex });
+    let selectedShortcuts = this.filterByEnvironment(os, this.state.shortcuts);
+    this.setState({ tabIndex, selectedShortcut: selectedShortcuts });
   };
+
   render() {
     return (
       <React.Fragment>
         <div className="wrapper">
-          <header onClick={() => this.showMain()}>
+          <header onClick={() => this.goToShortcut({ slug: "all" })}>
             <h1>Shortcuts</h1>
           </header>
 
           <Tabs selectedIndex={this.state.tabIndex} onSelect={this.onSelect}>
             <TabList>{this.state.environments.map(this.renderTabs)}</TabList>
             {this.state.shortcutsPerEnvironments.map(this.renderShortcuts)}
-            {/* <TabPanel>
-          <h2>Any content 1</h2>
-        </TabPanel>
-        <TabPanel>
-          <h2>Any content 2</h2>
-        </TabPanel> */}
           </Tabs>
         </div>
       </React.Fragment>

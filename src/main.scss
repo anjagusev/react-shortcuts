@@ -196,3 +196,19 @@ kbd {
 .vscode {
   order: 0;
 }
+
+@media print {
+  body {
+    margin: 0;
+    color: #000;
+    background-color: #fff;
+  }
+
+  .links > * {
+    display: none;
+  }
+
+  // .wrap {
+  //   grid-template-columns: max-content;
+  // }
+}

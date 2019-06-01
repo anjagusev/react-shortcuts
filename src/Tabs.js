@@ -37,16 +37,19 @@ class TabSection extends React.Component {
     let tabIndex = 0;
     const { params } = this.props.match;
     let index = 0;
+    //if operating system param exists but shortcut param doesn't,
+    //show all shortcuts based on operating system
     if (params.os != null && params.Id == null) {
       tabIndex = distinctEnvironments.findIndex(env => env === params.os);
       selectedShortcut = this.filterByEnvironment(
         params.os,
         this.state.shortcuts
       );
-    } else if (params.Id != null) {
+    }
+    //if operating system and shortcut id exist, display the selected shortcut
+    else if (params.Id != null) {
       selectedShortcut = updatedShortcuts.filter(sc => sc.slug == params.Id);
     }
-    //otherwise all shortcuts are selected
     this.setState({
       shortcuts: updatedShortcuts,
       environments: distinctEnvironments,
@@ -55,12 +58,14 @@ class TabSection extends React.Component {
       selectedShortcut
     });
   }
+
   getOSByIndex = index => {
     return this.state.environments[index];
   };
   filterByEnvironment = (environment, shortcuts) => {
     return shortcuts.filter(shortcut => shortcut.os === environment);
   };
+
   generateSlugs(shortcut) {
     shortcut.slug =
       shortcut.os.toLowerCase() +
@@ -74,26 +79,29 @@ class TabSection extends React.Component {
   };
 
   goToShortcut = shortcut => {
+    //This is called when user clicks "Shortcuts" header.
+    //It displays all existing shortcuts for tab1 operating system
     if (shortcut.slug == "all") {
       let selectedShortcut = [...this.state.shortcuts];
+
       this.props.history.push(`/`);
       this.setState({ selectedShortcut, tabIndex: 0 });
     } else {
+      //This is called when a specific shortcut is clicked on.
       let selectedShortcut = [...this.state.shortcuts];
       selectedShortcut = selectedShortcut.filter(
         sc => sc.slug == shortcut.slug
       );
-
       this.setState({ selectedShortcut });
       this.props.history.push(`/${shortcut.os}/${shortcut.slug}`);
     }
   };
 
-  renderShortcuts = shortcutsPerEnvironment => {
+  renderShortcuts = shortcutObj => {
     return (
-      <TabPanel key={shortcutsPerEnvironment.os}>
+      <TabPanel key={shortcutObj.os}>
         <Shortcuts
-          shortcuts={shortcutsPerEnvironment}
+          shortcuts={shortcutObj}
           goToShortcut={this.goToShortcut}
           selectedShortcut={this.state.selectedShortcut}
           environments={this.state.environments}
@@ -102,6 +110,7 @@ class TabSection extends React.Component {
     );
   };
 
+  //This is the tab select function
   onSelect = tabIndex => {
     let os = this.getOSByIndex(tabIndex);
     this.props.history.push(`/${os}`);
